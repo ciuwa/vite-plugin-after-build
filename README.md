@@ -1,21 +1,21 @@
-# vite-plugin-auto-version
+# vite-plugin-after-build
 
 ## Overview
 
-`vite-plugin-auto-version` is a Vite plugin designed to automate version management for your projects. During the build process, this plugin automatically reads and updates the version number in the `package.json` file. If the build fails, the version number remains unchanged, ensuring consistency between the version number and the build status.
+`vite-plugin-after-build` is a Vite plugin designed to automate version management for your projects. During the build process, this plugin automatically reads and updates the version number in the `package.json` file. If the build fails, the version number remains unchanged, ensuring consistency between the version number and the build status.
 
 ## Installation
 
 You can install this plugin using npm or yarn:
 
 ```bash
-npm install vite-plugin-auto-version -D
+npm install vite-plugin-after-build -D
 ```
 
 Or
 
 ```bash
-yarn add vite-plugin-auto-version -D
+yarn add vite-plugin-after-build -D
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Introduce and use the plugin in your Vite configuration file (`vite.config.js` o
 ```javascript
 // vite.config.js or vite.config.ts
 import { defineConfig } from 'vite';
-import autoVersion from 'vite-plugin-auto-version';
+import autoVersion from 'vite-plugin-after-build';
 
 export default defineConfig({
   plugins: [
@@ -50,7 +50,7 @@ Custom configurations
 
 ### Build Process
 
-1. When you run the Vite build command (e.g., `vite build`), the `vite-plugin-auto-version` plugin is automatically loaded and executed.
+1. When you run the Vite build command (e.g., `vite build`), the `vite-plugin-after-build` plugin is automatically loaded and executed.
 2. The plugin reads and parses the current version number from the `package.json` file.
 3. Based on the configuration (default is `patch` type), the plugin calculates and generates a new version number.
 4. Before the build succeeds, the plugin updates the version number in the `package.json` file and saves it back to the file.

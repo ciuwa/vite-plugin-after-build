@@ -14,12 +14,12 @@ export default function autoVersionPlugin(options: AutoVersionPluginOptions = {}
 
   if (disabled) {
     return {
-      name: 'vite-plugin-auto-version'
+      name: 'vite-plugin-after-build'
     }
   }
 
   return {
-    name: 'vite-plugin-auto-version',
+    name: 'vite-plugin-after-build',
     buildStart() {
 
       const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
