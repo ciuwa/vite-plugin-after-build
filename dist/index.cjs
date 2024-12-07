@@ -63,11 +63,11 @@ function autoVersionPlugin(options = {}) {
   const disabled = options.disabled ?? false;
   if (disabled) {
     return {
-      name: "vite-plugin-auto-version"
+      name: "vite-plugin-after-build"
     };
   }
   return {
-    name: "vite-plugin-auto-version",
+    name: "vite-plugin-after-build",
     buildStart() {
       const pkg = JSON.parse(import_node_fs.default.readFileSync(pkgPath, "utf-8"));
       oldVersion = pkg.version;

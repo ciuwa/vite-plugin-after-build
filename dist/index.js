@@ -29,11 +29,11 @@ function autoVersionPlugin(options = {}) {
   const disabled = options.disabled ?? false;
   if (disabled) {
     return {
-      name: "vite-plugin-auto-version"
+      name: "vite-plugin-after-build"
     };
   }
   return {
-    name: "vite-plugin-auto-version",
+    name: "vite-plugin-after-build",
     buildStart() {
       const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
       oldVersion = pkg.version;
