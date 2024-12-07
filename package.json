@@ -1,0 +1,34 @@
+{
+  "name": "vite-plugin-after-build",
+  "version": "0.0.2",
+  "keywords": [
+    "vite-plugin",
+    "increment version",
+    "build auto version"
+  ],
+  "description": "vite-plugin-after-build is a Vite plugin that allows you to perform actions after the build process, such as automatically updating the version number or customizing other tasks.",
+  "scripts": {
+    "dev": "vite",
+    "build": "npx tsup ./src/index.ts"
+  },
+  "peerDependencies": {
+    "vite": "*"
+  },
+  "main": "./dist/index.js",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsup": "^8.3.5",
+    "typescript": "~5.6.2"
+  },
+  "type": "module",
+  "license": "MIT",
+  "author": "ciuwa <ciuwa@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ciuwa/vite-plugin-after-build.git"
+  },
+  "homepage": "https://github.com/ciuwa/vite-plugin-after-build.git",
+  "publishConfig": {
+    "access": "public"
+  }
+}
