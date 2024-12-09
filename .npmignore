@@ -19,3 +19,4 @@ yarn-error.log*
 tsconfig.json
 tsup.config.ts
 src
+.github
