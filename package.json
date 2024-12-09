@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-after-build",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "keywords": [
     "vite-plugin",
     "increment version",
