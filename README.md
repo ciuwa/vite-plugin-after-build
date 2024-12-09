@@ -27,11 +27,11 @@ Introduce and use the plugin in your Vite configuration file (`vite.config.js` o
 ```javascript
 // vite.config.js or vite.config.ts
 import { defineConfig } from 'vite';
-import autoVersion from 'vite-plugin-after-build';
+import afterBuild from 'vite-plugin-after-build';
 
 export default defineConfig({
   plugins: [
-    autoVersion()
+    afterBuild()
   ],
   // ... other configuration options
 });
