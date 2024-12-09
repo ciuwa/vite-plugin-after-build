@@ -4,13 +4,10 @@
 .idea
 .vite_opt_cache
 .vscode
-# dist
 node_modules
 pnpm-global
 demo
-plugin
-### Node template
-# Logs
+Logs
 logs
 *.log
 npm-debug.log*
@@ -20,3 +17,5 @@ tsconfig.json
 tsup.config.ts
 src
 .github
+scripts
+plugin
