@@ -20,8 +20,8 @@ jobs:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm -v; node -v
-      - run: npm install -g npm
-      - run: npm ci
+      - run: npm install -g pnpm
+      - run: pnpm install
       - run: npm run build
       
   publish:  
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4  
 
       - name: npm login  
-        run: echo ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Publish to npm  
         env:  
