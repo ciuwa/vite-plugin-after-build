@@ -9,7 +9,7 @@
   "description": "vite-plugin-after-build is a Vite plugin that allows you to perform actions after the build process, such as automatically updating the version number or customizing other tasks.",
   "scripts": {
     "dev": "vite",
-    "build": "npx tsup ./src/index.ts"
+    "build": "tsup ./src/index.ts"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
