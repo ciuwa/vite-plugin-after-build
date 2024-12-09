@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const packagePath = path.join(__dirname, './package.json');
+const packagePath = path.join(__dirname, '../package.json');
 const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
 
 pkg.version = incrementVersion(pkg.version)
