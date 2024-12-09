@@ -8,32 +8,39 @@ on:
       - 'v*'  # 监控以 v 开头的标签推送  
 
 jobs: 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     id-token: write
-  #   steps:
-  #     - uses: actions/checkout@v4 
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '18.x'
-  #         registry-url: 'https://registry.npmjs.org'
-
-  #     # 安装 pnpm
-  #     - uses: pnpm/action-setup@v4
-  #       with:
-  #         version: 8
-
-  #     - name: Install dependencies
-  #       run: pnpm install && pnpm build
-      
-  publish:  
+  build-and-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     if: ${{ github.repository_owner == 'ciuwa' }}
-    steps:  
-      - name: Checkout code  
-        uses: actions/checkout@v4  
+    steps:
+      - uses: actions/checkout@v4 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      # 安装 pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install && pnpm build
+
+
+      - name: Commit package.json  
+        run: |  
+          git config --local user.email "ciuwa@qq.com"  
+          git config --local user.name "ciuwa"  
+          git add ./package.json  # 将更改添加到暂存区  
+          git commit -m "Auto updating package.json version" || echo "No changes to commit"  # 如果有更改就提交
+        
+      - name: Push changes  
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub Token 进行推送  
+        run: git push origin main  # 将更改推送回仓库
 
       - name: npm login  
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
@@ -42,4 +49,3 @@ jobs:
         env:  
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  
         run: npm publish --access public  # 发布到 npm  
-
