@@ -1,23 +1,43 @@
-name: Publish to npm
+name: Release
 
 on:
   push:
-    tags:  
-      - 'v*'  # 监控以 v 开头的标签推送  
+    tags:
+      - 'v*'
 
-jobs: 
-  build-and-publish:
+jobs:
+  create-release:
+    name: Create Release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          draft: false
+          prerelease: false
+
+  publish-npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    # Skip this step in forks
     if: ${{ github.repository_owner == 'ciuwa' }}
     steps:
-      - uses: actions/checkout@v4 
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 18
 
       # 安装 pnpm
       - uses: pnpm/action-setup@v4
@@ -27,29 +47,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install && pnpm build
 
-      # - name: Get version from package.json  
-      #   id: get_version  
-      #   run: |  
-      #     VERSION=$(jq -r .version package.json)  
-      #     echo "VERSION=${VERSION}" >> $GITHUB_ENV 
-
-      - name: Commit package.json  
-        run: |  
-          git config --local user.email "ciuwa@qq.com"  
-          git config --local user.name "ciuwa"  
-          # git tag "$VERSION" || echo "Tag already exists"
-          git add ./package.json  # 将更改添加到暂存区  
-          git commit -m "Auto updating package.json version" || echo "No changes to commit" 
-        
-      - name: Push changes  
-        env:  
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub Token 进行推送  
-        run: git push origin main  # 将更改推送回仓库
-
-      - name: npm login  
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-
-      - name: Publish to npm  
-        env:  
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  
-        run: npm publish
+      - name: Publish packages to NPM
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          npm whoami
+          npm publish
