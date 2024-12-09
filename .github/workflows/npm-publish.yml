@@ -1,0 +1,37 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - main  # 监控 main 分支的推送 
+    tags:  
+      - 'v*'  # 监控以 v 开头的标签推送  
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm
+      - run: npm ci 
+      - run: npm run build
+      
+  publish:  
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'ciuwa' }}
+    steps:  
+      - name: Checkout code  
+        uses: actions/checkout@v4  
+
+      - name: Publish to npm  
+        env:  
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  
+        run: npm publish --access public  # 发布到 npm  
+
