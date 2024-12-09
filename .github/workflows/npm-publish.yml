@@ -21,7 +21,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm -v; node -v
       - run: npm install -g npm
-      - run: npm i
+      - run: npm ci
       - run: npm run build
       
   publish:  
@@ -30,6 +30,9 @@ jobs:
     steps:  
       - name: Checkout code  
         uses: actions/checkout@v4  
+
+      - name: npm login  
+        run: echo ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm  
         env:  
