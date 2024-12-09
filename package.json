@@ -33,5 +33,6 @@
   "homepage": "https://github.com/ciuwa/vite-plugin-after-build.git",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "readme": "README.md"
 }

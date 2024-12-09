@@ -2,8 +2,6 @@ name: Publish to npm
 
 on:
   push:
-    branches:
-      - main  # 监控 main 分支的推送 
     tags:  
       - 'v*'  # 监控以 v 开头的标签推送  
 
@@ -29,13 +27,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install && pnpm build
 
+      # - name: Get version from package.json  
+      #   id: get_version  
+      #   run: |  
+      #     VERSION=$(jq -r .version package.json)  
+      #     echo "VERSION=${VERSION}" >> $GITHUB_ENV 
 
       - name: Commit package.json  
         run: |  
           git config --local user.email "ciuwa@qq.com"  
           git config --local user.name "ciuwa"  
+          # git tag "$VERSION" || echo "Tag already exists"
           git add ./package.json  # 将更改添加到暂存区  
-          git commit -m "Auto updating package.json version" || echo "No changes to commit"  # 如果有更改就提交
+          git commit -m "Auto updating package.json version" || echo "No changes to commit" 
         
       - name: Push changes  
         env:  
@@ -48,4 +52,4 @@ jobs:
       - name: Publish to npm  
         env:  
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  
-        run: npm publish --access public  # 发布到 npm  
+        run: npm publish
