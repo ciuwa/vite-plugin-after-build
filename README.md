@@ -44,9 +44,8 @@ you'll notice that the version number in the `package.json` file has been automa
 ### Configuration Options
 
 Custom configurations
-
-- `threshold`: The threshold option, defaulting to 100, specifies the limit for the patch version. When the patch number exceeds this threshold, the minor version is incremented, and the patch number resets to 0. For example, from version 1.0.100, the next version would be 1.1.0
-- `disabled`: Disabled or not, default is false, indicating enabled
+- `updateVersion`: The threshold option, defaulting to 100, specifies the limit for the patch version. When the patch number exceeds this threshold, the minor version is incremented, and the patch number resets to 0. For example, from version 1.0.100, the next version would be 1.1.0
+- `gitCommit`: git commit
 
 ### Build Process
 
