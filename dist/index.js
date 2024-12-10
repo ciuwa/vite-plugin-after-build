@@ -22,22 +22,11 @@ function incrementVersion(currentVersion, threshold) {
 }
 
 // src/index.ts
-import { merge } from "lodash-es";
-var defaultOptions = {
-  autoVersion: {
-    disabled: false,
-    threshold: 100
-  },
-  beforeBuild: void 0,
-  afterBuild: void 0
-};
 function autoVersionPlugin(options = {}) {
-  const __options = merge(options, defaultOptions);
-  console.log(__options);
   let buildSuccessful = false;
   let oldVersion = "";
   const pkgPath = path.resolve(process.cwd(), "package.json");
-  const disabled = options.autoVersion?.disabled ?? false;
+  const disabled = options.disabled ?? false;
   if (disabled) {
     return {
       name: "vite-plugin-after-build"
@@ -48,7 +37,7 @@ function autoVersionPlugin(options = {}) {
     buildStart() {
       const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
       oldVersion = pkg.version;
-      const max = options.autoVersion.threshold ?? 100;
+      const max = options.threshold ?? 100;
       const newVersion = incrementVersion(pkg.version, max);
       pkg.version = newVersion;
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf-8");
@@ -62,9 +51,6 @@ function autoVersionPlugin(options = {}) {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
         pkg.version = oldVersion;
         fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf-8");
-      }
-      if (options.afterBuild) {
-        options.afterBuild(error);
       }
     }
   };

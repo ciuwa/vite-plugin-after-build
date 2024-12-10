@@ -19,7 +19,6 @@
     "vite": "*"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.1",
     "tsup": "^8.3.5",
     "typescript": "~5.6.2",
@@ -36,9 +35,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "readme": "README.md",
-  "dependencies": {
-    "basic-ftp": "^5.0.5",
-    "lodash-es": "^4.17.21"
-  }
+  "readme": "README.md"
 }

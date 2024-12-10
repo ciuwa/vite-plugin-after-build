@@ -56,22 +56,11 @@ function incrementVersion(currentVersion, threshold) {
 }
 
 // src/index.ts
-var import_lodash_es = require("lodash-es");
-var defaultOptions = {
-  autoVersion: {
-    disabled: false,
-    threshold: 100
-  },
-  beforeBuild: void 0,
-  afterBuild: void 0
-};
 function autoVersionPlugin(options = {}) {
-  const __options = (0, import_lodash_es.merge)(options, defaultOptions);
-  console.log(__options);
   let buildSuccessful = false;
   let oldVersion = "";
   const pkgPath = import_node_path.default.resolve(process.cwd(), "package.json");
-  const disabled = options.autoVersion?.disabled ?? false;
+  const disabled = options.disabled ?? false;
   if (disabled) {
     return {
       name: "vite-plugin-after-build"
@@ -82,7 +71,7 @@ function autoVersionPlugin(options = {}) {
     buildStart() {
       const pkg = JSON.parse(import_node_fs.default.readFileSync(pkgPath, "utf-8"));
       oldVersion = pkg.version;
-      const max = options.autoVersion.threshold ?? 100;
+      const max = options.threshold ?? 100;
       const newVersion = incrementVersion(pkg.version, max);
       pkg.version = newVersion;
       import_node_fs.default.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf-8");
@@ -96,9 +85,6 @@ function autoVersionPlugin(options = {}) {
         const pkg = JSON.parse(import_node_fs.default.readFileSync(pkgPath, "utf-8"));
         pkg.version = oldVersion;
         import_node_fs.default.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf-8");
-      }
-      if (options.afterBuild) {
-        options.afterBuild(error);
       }
     }
   };
