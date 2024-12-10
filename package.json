@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-after-build",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "keywords": [
     "vite-plugin",
     "increment version",
@@ -18,8 +18,13 @@
   "peerDependencies": {
     "vite": "*"
   },
+  "dependencies": {
+    "basic-ftp": "^5.0.5",
+    "lodash-es": "^4.17.12"
+  },
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "@types/lodash-es": "^4.17.12",
     "tsup": "^8.3.5",
     "typescript": "~5.6.2",
     "vite": "^6.0.3"
