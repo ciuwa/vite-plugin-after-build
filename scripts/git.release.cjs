@@ -21,7 +21,7 @@ try {
 
   // 6. 推送到远程仓库  
   execSync('git push origin main', { stdio: 'inherit' });
-  execSync(`git push origin ${newVersion}`, { stdio: 'inherit' });
+  execSync(`git push origin v${newVersion}`, { stdio: 'inherit' });
   console.log(`Version updated ${newVersion}`);
 } catch (error) {
   console.error('Failed to commit changes or create a tag:', error.message);
