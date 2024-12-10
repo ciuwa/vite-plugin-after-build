@@ -16,3 +16,7 @@ export function incrementVersion(currentVersion: string, threshold: number): str
     return `${major}.${minor}.${newPatch}`;
   }
 }
+
+export function log(...messages: string[]) {
+  console.log("【vite-plugin-after-build】" + messages.join(' '));
+}  
