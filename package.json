@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-after-build",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "keywords": [
     "vite-plugin",
     "increment version",
@@ -12,7 +12,7 @@
     "build": "npx tsup ./src/index.ts",
     "release": "node ./scripts/git.release.cjs"
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "peerDependencies": {
