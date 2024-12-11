@@ -37,23 +37,25 @@ export default function autoVersionPlugin(options: ViteAfterBuildPluginOptions =
 
   const __options = merge(defaultOptions, options)
   let buildSuccessful = false;
+  const { enable, threshold = 100 } = __options.updateVersion || {};
 
   return {
     name: 'vite-plugin-after-build',
 
     buildStart() {
-      const { enable, threshold = 100 } = __options.updateVersion || {};
       if (enable) {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
         oldVersion = pkg.version;
         newVersion = incrementVersion(pkg.version, threshold);
         pkg.version = newVersion;
         fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), 'utf-8');
-        log(`Version update succeed! ${oldVersion} -> ${newVersion}`);
       }
     },
 
     async buildEnd(error) {
+      if (enable) {
+        log(`Version update succeed! ${oldVersion} -> ${newVersion}`);
+      }
       if (!error) {
         buildSuccessful = true;
         await Promise.all([
@@ -62,7 +64,7 @@ export default function autoVersionPlugin(options: ViteAfterBuildPluginOptions =
         ]);
       }
       // 构建失败，则将版本号 revert  
-      if (error && !buildSuccessful && oldVersion !== '') {
+      if (enable && error && !buildSuccessful && oldVersion !== '') {
         revertVersion(oldVersion)
       }
     }
