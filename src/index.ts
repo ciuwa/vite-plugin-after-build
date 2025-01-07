@@ -53,18 +53,25 @@ export default function autoVersionPlugin(options: ViteAfterBuildPluginOptions =
     },
 
     async buildEnd(error) {
+      if (!error) {
+        buildSuccessful = true;
+      } else {
+        buildSuccessful = false;
+      }
+    },
+
+    async closeBundle() {
       if (enable) {
         log(`Version update succeed! ${oldVersion} -> ${newVersion}`);
       }
-      if (!error) {
-        buildSuccessful = true;
+      if (buildSuccessful) {
         await Promise.all([
           gitCommit(__options.gitCommit || { enable: false } as any),
           ftpUpload(__options.ftpUpload || { enable: false } as any),
         ]);
       }
       // 构建失败，则将版本号 revert  
-      if (enable && error && !buildSuccessful && oldVersion !== '') {
+      if (enable && !buildSuccessful && oldVersion !== '') {
         revertVersion(oldVersion)
       }
     }

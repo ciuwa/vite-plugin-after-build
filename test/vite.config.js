@@ -8,11 +8,11 @@ export default defineConfig({
         enable: true
       },
       gitCommit: {
-        enable: true,
+        enable: false,
         push: true
       },
       ftpUpload: {
-        enable: true,
+        enable: false,
         host: "127.0.0.1",
         user: "uname",
         password: "upass",
